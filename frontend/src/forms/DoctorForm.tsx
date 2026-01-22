@@ -30,7 +30,7 @@ export const DoctorForm = ({ onSuccess }: DoctorFormProps) => {
         return;
       }
 
-      await doctorService.createDoctor({ doctorName:values.name });
+      await doctorService.createDoctor({ doctorName:`Dr. ${values.name.toLowerCase()}` });
       await doctorService.fetchDoctors();
       
       toast.success('Doctor added successfully');
@@ -49,8 +49,9 @@ export const DoctorForm = ({ onSuccess }: DoctorFormProps) => {
     >
       {({ isSubmitting }) => (
         <Form className="flex gap-2 items-center relative">
-          <div className="flex-9">
-            <TextInput name="name" label="Add Doctor" required />
+          <div className="flex-9 relative">
+            <span className='absolute left-2 top-9 text-base text-primary '>Dr. </span>
+            <TextInput name="name" label="Add Doctor" required inputClassName='pl-9' />
           </div>
           <PrimaryButton type="submit" disabled={isSubmitting} className="h-10 px-4 shrink-0 absolute top-7 right-0">
             {isSubmitting ? 'Adding...' : 'Add'}

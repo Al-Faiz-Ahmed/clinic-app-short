@@ -34,7 +34,7 @@ export const ServicesList = ({ className, refreshKey }: ServicesListProps) => {
                 key={service.id || service.serviceName}
                 className="px-4 py-3 flex justify-between items-center hover:bg-muted/30 transition-colors"
               >
-                <div className="text-sm text-foreground">
+                <div className="text-sm text-foreground capitalize">
                   {service.serviceName}
                 </div>
                 <div className="text-sm text-foreground font-medium">

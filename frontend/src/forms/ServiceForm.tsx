@@ -22,7 +22,7 @@ export const ServiceForm = ({ onSuccess }: ServiceFormProps) => {
   const handleSubmit = async (values: ServiceFormValues, { resetForm }: any) => {
     try {
       await serviceService.createService({
-        name: values.name,
+        serviceName: values.name,
         fee: values.fee,
       });
       await serviceService.fetchServices();

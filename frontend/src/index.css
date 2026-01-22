@@ -148,6 +148,17 @@
     /* Standard property for newer browsers */
   }
 
+  /* Fix checkbox background color */
+  input[type="checkbox"] {
+    background-color: white !important;
+    border-color: var(--border) !important;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+  }
+
   /* body {
     @apply bg-background text-foreground;
   } */

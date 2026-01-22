@@ -50,8 +50,8 @@ export const DoctorsList = ({
                     isSelected && 'bg-primary/10'
                   )}
                 >
-                  <div className="text-sm text-foreground">
-                    {doctor.doctorName.startsWith('Dr.') ? doctor.doctorName : `Dr. ${doctor.doctorName}`}
+                  <div className="text-sm text-foreground capitalize">
+                   {doctor.doctorName}
                   </div>
                 </div>
               );

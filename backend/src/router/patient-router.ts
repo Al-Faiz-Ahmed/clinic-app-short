@@ -1,8 +1,11 @@
 import express from "express";
-import { createPatient } from "../controller/patient-controller";
+import { createPatient,getCheckup, getPatients, getPatientStats } from "../controller/patient-controller";
 
 const router:express.Router = express.Router();
 
 router.post("/",createPatient);
+router.get("/", getPatients);
+router.get("/stats", getPatientStats);
+router.get("/checkup", getCheckup)
 
 export default router ;

@@ -8,6 +8,7 @@ interface TextInputProps {
   placeholder?: string;
   required?: boolean;
   className?: string;
+  inputClassName?: string;
 }
 
 export const TextInput = ({
@@ -16,6 +17,7 @@ export const TextInput = ({
   placeholder,
   required,
   className,
+  inputClassName
 }: TextInputProps) => {
   const [field, meta] = useField(name);
 
@@ -34,7 +36,8 @@ export const TextInput = ({
         aria-invalid={meta.touched && meta.error ? true : undefined}
         aria-describedby={meta.touched && meta.error ? `${name}-error` : undefined}
         className={cn(
-          'h-10',
+          'h-10 capitalize',
+          inputClassName ,
           meta.touched && meta.error && 'border-destructive focus-visible:ring-destructive'
         )}
       />

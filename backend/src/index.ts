@@ -5,12 +5,14 @@ import { GlobalError } from "./error/global-error";
 import servicesRouter from "./router/service-router"
 import doctorsRouter from "./router/doctor-router"
 import patientsRouter from "./router/patient-router"
-const PORT  = parseInt(process.env.PORT || '5000',10)
+import cors from 'cors'
 
+const PORT  = parseInt(process.env.PORT || '5000',10)
 
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.get("/",(eq,res)=>{
     res.json({message:'Root Page Access'})

@@ -11,6 +11,7 @@ interface NumberInputProps {
   max?: number;
   readonly?: boolean;
   className?: string;
+  onDoubleClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
 }
 
 export const NumberInput = ({
@@ -22,6 +23,7 @@ export const NumberInput = ({
   max,
   readonly = false,
   className,
+  onDoubleClick,
 }: NumberInputProps) => {
   const [field, meta, helpers] = useField(name);
 
@@ -60,6 +62,7 @@ export const NumberInput = ({
         max={max}
         readOnly={readonly}
         onChange={handleChange}
+        onDoubleClick={onDoubleClick}
         aria-invalid={meta.touched && meta.error ? true : undefined}
         aria-describedby={meta.touched && meta.error ? `${name}-error` : undefined}
         className={cn(

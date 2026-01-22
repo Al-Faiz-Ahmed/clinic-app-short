@@ -1,11 +1,9 @@
 // src/models/user.ts
-import { pgTable, uuid, varchar, timestamp, integer } from "drizzle-orm/pg-core";
-import { sql } from "drizzle-orm";
+import { pgTable,  varchar, timestamp, integer } from "drizzle-orm/pg-core";
 
 export const service = pgTable("services", {
-  id: uuid("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey(),
   fee: integer("fee").notNull().default(0),
   serviceName: varchar("service_name", { length: 255 }).notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),

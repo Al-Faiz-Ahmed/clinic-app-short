@@ -16,14 +16,13 @@ import { doctor } from "./doctor";
 export const userGenderEnum = pgEnum("user_gender", ["male", "female"]);
 
 export const patient = pgTable("patients", {
-  id: uuid("id")
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
+  id: varchar("id")
+    .primaryKey(),
   patient: varchar("patient", { length: 255 }).notNull(),
-  doctorId: varchar("doctor", { length: 255 })
+  doctorId: varchar("doctor_id")
     .notNull()
     .references(() => doctor.id),
-  serviceId: varchar("service_id", { length: 255 })
+  serviceId: varchar("service_id")
     .notNull()
     .references(() => service.id),
   token: integer("token").notNull(),

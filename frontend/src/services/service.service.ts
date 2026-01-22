@@ -11,7 +11,7 @@ export interface Service {
 export const serviceService = {
   fetchServices: async (): Promise<Service[]> => {
     try {
-      const response = await api.get("/services");
+      const response = await api.get("/service");
       const services = response.data?.data || [];
       localStorageUtils.services.set(services);
       return services;
@@ -21,8 +21,8 @@ export const serviceService = {
     }
   },
 
-  createService: async (service: Service): Promise<Service> => {
-    const response = await api.post("/services", service);
+  createService: async (service: Pick<Service, "serviceName"|"fee">): Promise<Service> => {
+    const response = await api.post("/service", service);
     const newService = response.data?.data || service;
 
     // Update localStorage

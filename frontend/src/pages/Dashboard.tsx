@@ -4,10 +4,12 @@ import { DoctorForm } from '@/forms/DoctorForm';
 import { ServiceForm } from '@/forms/ServiceForm';
 import { DoctorsList } from '@/components/lists/DoctorsList';
 import { ServicesList } from '@/components/lists/ServicesList';
-import { PatientTable } from '@/components/tables/PatientTable';
+import { PatientTable } from '@/components/patient/PatientTable';
 import { useState, useEffect } from 'react';
 import { doctorService } from '@/services/doctor.service';
 import { serviceService } from '@/services/service.service';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
 
 export default function Dashboard() {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -27,6 +29,26 @@ export default function Dashboard() {
     setRefreshKey((prev) => prev + 1);
   };
 
+  const handleRefreshDoctors = async () => {
+    try {
+      await doctorService.fetchDoctors();
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      // Error is already handled in the service
+      setRefreshKey((prev) => prev + 1);
+    }
+  };
+
+  const handleRefreshServices = async () => {
+    try {
+      await serviceService.fetchServices();
+      setRefreshKey((prev) => prev + 1);
+    } catch (error) {
+      // Error is already handled in the service
+      setRefreshKey((prev) => prev + 1);
+    }
+  };
+
   return (
     <DashboardLayout
       topSection={[
@@ -42,9 +64,19 @@ export default function Dashboard() {
           <div className="bg-card border border-border/50 rounded-lg p-6 space-y-6">
             <DoctorForm onSuccess={handleFormSuccess} />
             <div>
-              <h3 className="text-base font-bold text-foreground mb-3">
-                Doctors List
-              </h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base font-bold text-foreground">
+                  Doctors List
+                </h3>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={handleRefreshDoctors}
+                  title="Refresh doctors list"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
+              </div>
               <DoctorsList refreshKey={refreshKey} />
             </div>
           </div>
@@ -55,9 +87,19 @@ export default function Dashboard() {
           <div className="bg-card border border-border/50 rounded-lg p-6 space-y-6">
             <ServiceForm onSuccess={handleFormSuccess} />
             <div>
-              <h3 className="text-base font-bold text-foreground mb-3">
-                Services List
-              </h3>
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base font-bold text-foreground">
+                  Services List
+                </h3>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={handleRefreshServices}
+                  title="Refresh services list"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </Button>
+              </div>
               <ServicesList refreshKey={refreshKey} />
             </div>
           </div>
@@ -65,7 +107,7 @@ export default function Dashboard() {
       ]}
       bottomSection={
         <div className="bg-card border border-border/50 rounded-lg p-6">
-          {/* <PatientTable /> */}
+          <PatientTable />
         </div>
       }
     />

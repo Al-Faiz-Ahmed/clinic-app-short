@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { patientService, type Patient, type PatientFilters } from '@/services/patient.service';
-import { TextInput } from '@/components/inputs/TextInput';
+// import { TextInput } from '@/components/inputs/TextInput';
 import { cn } from '@/lib/utils';
 
 interface PatientTableProps {

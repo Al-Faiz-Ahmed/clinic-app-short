@@ -10,7 +10,7 @@ export interface Doctor {
 export const doctorService = {
   fetchDoctors: async (): Promise<Doctor[]> => {
     try {
-      const response = await api.get('/doctors');
+      const response = await api.get('/doctor');
       const doctors = response.data?.data || [];
       localStorageUtils.doctors.set(doctors);
       return doctors;
@@ -21,7 +21,7 @@ export const doctorService = {
   },
 
   createDoctor: async (doctor: Pick<Doctor, "doctorName">): Promise<Doctor> => {
-    const response = await api.post('/doctors', doctor);
+    const response = await api.post('/doctor', doctor);
     const newDoctor = response.data?.data || doctor;
     
     // Update localStorage

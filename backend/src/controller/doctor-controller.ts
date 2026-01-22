@@ -3,6 +3,7 @@ import { NewService, service } from "../models/services";
 import { db } from "../database/db";
 import { GlobalError } from "../error/global-error";
 import { doctor, NewDoctor } from "../models/doctor";
+import { v4 as uuidv4 } from "uuid";
 
 // export const createService = async (req:Request,res:Response,next:NextFunction) => {}
 
@@ -21,7 +22,11 @@ export const addDoctor = async (
     next(new GlobalError(402, `Doctor name invlaid format`, "BAD FORMAT"));
   }
   try {
-    const addDoctorResponse = await db.insert(doctor).values({ doctorName });
+    const doctorId = uuidv4();
+    const addDoctorResponse = await db.insert(doctor).values({ 
+      id: doctorId,
+      doctorName 
+    }).returning();
 
     res.json({
       data: addDoctorResponse,
@@ -33,6 +38,7 @@ export const addDoctor = async (
     next(new GlobalError(500, `details ${err}`, "SERVER INTERNAL ERROR"));
   }
 };
+
 export const getAllDoctor = async (
   req: Request,
   res: Response,
@@ -50,6 +56,6 @@ export const getAllDoctor = async (
       error: null,
     });
   } catch (err) {
-    next(new GlobalError(500, `details ${err}`, "SERVER INTERNAL ERROR"));
+    return next(new GlobalError(500, `details ${err}`, "SERVER INTERNAL ERROR"));
   }
 };
