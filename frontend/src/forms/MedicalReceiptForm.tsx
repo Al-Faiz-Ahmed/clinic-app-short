@@ -340,17 +340,19 @@ export const MedicalReceiptForm = ({ onSuccess, refreshKey }: MedicalReceiptForm
         </style>
       </head>
       
-      <body>
+      <body onload="setTimeout(() => window.print(), 300)">
+      <script>
+        window.onafterprint = () => window.close();
+      </script>
       
       <div class="receipt">
       
         <div class="center clinic">
-          SHEIKH MARWARI BOWNI<br>
-          MEDICAL CENTER
+          ABC MEDICAL CENTER
         </div>
       
         <div class="center branch">
-          Shershah Branch
+          XYZ Branch
         </div>
       
         <div class="dotted"></div>

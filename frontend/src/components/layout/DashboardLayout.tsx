@@ -16,7 +16,7 @@ export const DashboardLayout = ({
     <div className={cn('min-h-screen bg-muted/30', className)}>
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 pt-2">
         {/* Top Section - 3 columns with vertical dividers */}
-        <h2 className='font-sans text-center font-bold text-black text-3xl mb-3'>SHEIKH MARWARRI BOWNI <br /> MEDICAL CENTER</h2>
+        <h2 className='font-sans text-center font-bold text-black text-3xl mb-3'>ABC MEDICAL CENTER</h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-0 mb-6">
           {topSection.map((section, index) => (
             <div key={index} className="flex ">

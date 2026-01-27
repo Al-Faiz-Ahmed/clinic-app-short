@@ -1,0 +1,140 @@
+# Clinic App Platform
+
+A full-stack clinic management platform for managing doctors, patients, services, and medical receipts. The monorepo houses a React + Vite frontend and an Express + Drizzle ORM backend, offering a clean developer experience with TypeScript end to end.
+
+## Architecture at a Glance
+
+| Layer    | Tech & Highlights |
+|----------|-------------------|
+| Frontend | React 19 + Vite 7, Tailwind CSS 4, Formik/Zod validation, Axios client with toast-aware interceptors |
+| Backend  | Express 5, TypeScript, Drizzle ORM for PostgreSQL, layered routers/controllers, centralized error handling |
+| Database | PostgreSQL with schema migrations generated via Drizzle |
+
+```
+root
+├── backend   # REST API, database models, migrations
+└── frontend  # Vite SPA with dashboard components
+```
+
+## Prerequisites
+
+- Node.js 20+
+- pnpm 9+ (recommended) or npm 10+
+- PostgreSQL database reachable from the backend service
+
+## Environment Configuration
+
+### Backend (`backend/.env`)
+
+| Variable       | Description                            |
+|----------------|----------------------------------------|
+| `DATABASE_URL` | PostgreSQL connection string           |
+| `PORT`         | Optional; defaults to `5000` if absent |
+
+> Copy `backend/.env.example` and update values before running services.
+
+### Frontend (`frontend/.env` or `.env.local`)
+
+| Variable             | Description                                   |
+|----------------------|-----------------------------------------------|
+| `VITE_API_BASE_URL`  | Base URL for the backend (defaults to `http://localhost:5000/api` if unset) |
+
+## Installation & Setup
+
+Run the following from the repository root:
+
+```bash
+# Backend dependencies
+cd backend
+pnpm install
+
+# Frontend dependencies
+cd ../frontend
+pnpm install
+```
+
+> Prefer pnpm for deterministic installs. If you use npm, delete the `pnpm-lock.yaml` files first to avoid conflicts.
+
+## Development Workflow
+
+### Backend API
+
+```bash
+cd backend
+pnpm run dev        # Compile TS, watch, and start Express
+```
+
+- REST server mounts service/doctor/patient routers under `/api/*` and responds on `PORT` (default `5000`).
+- Global error middleware provides consistent envelope responses.
+
+### Frontend SPA
+
+```bash
+cd frontend
+pnpm run dev        # Launch Vite dev server (default http://localhost:5173)
+```
+
+- Configure `VITE_API_BASE_URL` to point at the backend dev server when running locally.
+- The Axios client automatically attaches tokens (from `localStorage`) and surfaces backend error envelopes via toast notifications.
+
+### VS Code Tasks
+
+The repository ships with ready-to-run dev tasks under `.vscode/tasks.json`:
+
+| Task Label     | What it does                                  |
+|----------------|-----------------------------------------------|
+| `Run Backend`  | Executes `npm run dev` with `cwd=backend`.     |
+| `Run Frontend` | Executes `npm run dev` with `cwd=frontend`.    |
+| `Run Full Stack` | Launches both tasks in parallel.            |
+
+From VS Code, open the Command Palette → **Tasks: Run Task** to launch any of them and quickly spin up the full development stack without leaving the editor.
+
+### Database Migrations (Drizzle)
+
+All migration commands run from the `backend` directory:
+
+```bash
+pnpm run db:generate   # Create SQL artifacts from TypeScript models
+pnpm run db:migrate    # Push pending migrations to the target database
+```
+
+Ensure `DATABASE_URL` is set before invoking these commands.
+
+## Production Builds
+
+```bash
+# Backend
+cd backend
+pnpm run build   # Outputs to backend/build
+
+# Frontend
+cd frontend
+pnpm run build   # Outputs to frontend/dist
+```
+
+Serve `frontend/dist` via any static host and point it to your deployed backend API URL.
+
+## Useful npm Scripts
+
+| Location  | Script          | Purpose                              |
+|-----------|-----------------|--------------------------------------|
+| backend   | `dev`           | Watch mode compilation + Express run |
+| backend   | `build`         | Compile TypeScript & rewrite paths   |
+| backend   | `start`         | Run compiled server (`node build/index.js`) |
+| backend   | `db:generate`   | Generate SQL migrations via Drizzle  |
+| backend   | `db:migrate`    | Apply migrations to the database     |
+| frontend  | `dev`           | Start Vite dev server with HMR       |
+| frontend  | `build`         | Production build                     |
+| frontend  | `preview`       | Preview production build locally     |
+| frontend  | `lint`          | Run ESLint checks                    |
+
+## Troubleshooting
+
+1. **CORS or 404 errors**: Ensure the backend server is running and `VITE_API_BASE_URL` matches its URL.
+2. **Database connection failures**: Verify `DATABASE_URL` credentials and network access to PostgreSQL.
+3. **TypeScript path issues**: Run `pnpm run build` in the backend to trigger `tsc-alias` rewrites.
+4. **Outdated dependencies**: Delete `node_modules`, reinstall with `pnpm install`, and retry.
+
+---
+
+> Generated by Al Faiz Ahed
